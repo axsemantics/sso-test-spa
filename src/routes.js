@@ -1,5 +1,6 @@
 import App from './App'
 import Main from 'views/main'
+import Login from 'views/login'
 
 let routes = {
 	'/': {
@@ -11,9 +12,8 @@ let routes = {
 		},
 		auth: true
 	},
-	// '/login': {
-	// 	component: Login
-	// }
+	'/login': {
+		component: Login
+	}
 }
-
 export default routes

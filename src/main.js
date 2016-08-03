@@ -9,6 +9,7 @@ import api from 'lib/api'
 import routes from './routes'
 import App from './App'
 import 'filters'
+
 Vue.use(Router)
 Vue.use(Keen)
 Vue.use(Üei)
@@ -21,15 +22,15 @@ router.map(routes)
 
 router.beforeEach((transition) => {
 	if (transition.to.auth && !api.auth.authenticated) {
+		console.log('redirect')
 		transition.redirect('/login')
 	} else {
 		transition.next()
 	}
 })
 
-api.auth.getSession()
-	.then(humanize.fetch).then(() => {
-		router.start({}, 'body')
-	}).catch(() => {
-		router.start({}, 'body')
-	})
+api.auth.getSession().then(() => {
+	router.start({}, 'body')
+}).catch((error) => {
+	router.start({}, 'body')
+})
