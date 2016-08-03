@@ -3,6 +3,7 @@ h1 LOGGIN!
 </template>
 <script>
 import api from 'lib/api'
+import auth from 'lib/api/auth'
 
 export default {
 	data() {
@@ -10,8 +11,7 @@ export default {
 		}
 	},
 	ready() {
-		console.log(api.auth)
-		api.auth.lock.show()
+ 			auth.lock.show()
 	}
 }
 </script>
