@@ -7,7 +7,7 @@ var config = {
 }
 var proxyMiddleware = require('http-proxy-middleware')
 var webpackConfig = require('./webpack.dev.conf')
-var port = process.env.PORT || 8080
+var port = process.env.PORT || 8880
 
 var app = express()
 var compiler = webpack(webpackConfig)
@@ -21,10 +21,12 @@ var devMiddleware = require('webpack-dev-middleware')(compiler, {
 })
 
 var hotMiddleware = require('webpack-hot-middleware')(compiler)
-// force page reload when html-webpack-plugin template changes
-compiler.plugin('compilation', function (compilation) {
-	compilation.plugin('html-webpack-plugin-after-emit', function (data, cb) {
-		hotMiddleware.publish({ action: 'reload' })
+	// force page reload when html-webpack-plugin template changes
+compiler.plugin('compilation', function(compilation) {
+	compilation.plugin('html-webpack-plugin-after-emit', function(data, cb) {
+		hotMiddleware.publish({
+			action: 'reload'
+		})
 		cb()
 	})
 })
@@ -51,7 +53,7 @@ app.use(hotMiddleware)
 var staticPath = path.posix.join(config.assetsPublicPath, config.assetsSubDirectory)
 app.use(staticPath, express.static('./static'))
 
-module.exports = app.listen(port, function (err) {
+module.exports = app.listen(port, function(err) {
 	if (err) {
 		console.log(err)
 		return

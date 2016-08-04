@@ -4,7 +4,10 @@ let headers = new Headers()
 headers.append('Content-Type', 'application/json')
 
 let api = {
-	headers
+	headers,
+	me() {
+		return api.fetch('http://localhost:9000/v1/me/')
+	}
 }
 
 api.fetch = function(url, method, body) {

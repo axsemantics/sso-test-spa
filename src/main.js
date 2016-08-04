@@ -24,7 +24,7 @@ router.map(routes)
 router.beforeEach((transition) => {
 	if (transition.to.auth && !auth.authenticated) {
 		console.log('redirect')
-		transition.redirect('/login')
+		// transition.redirect('/login')
 	} else {
 		transition.next()
 	}

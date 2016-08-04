@@ -6,12 +6,18 @@ let auth = {
 	authenticated: false,
 	init() {
 		auth.lock = new Auth0Lock('B4wfTnpzLjnvDYGgnC1HmEebTrEF1uEn',
-			'ax-semantics.eu.auth0.com')
+			'ax-semantics.eu.auth0.com', {
+				auth: {
+				params: {
+					scope: 'openid email nickname'
+				}
+			}
+			})
 
 		const saveAuth = (token, profile) => {
 			localStorage.setItem('id_token', token)
 			localStorage.setItem('profile', JSON.stringify(profile))
-			api.headers.set('Authorization', 'Bearer ' + token)
+			api.headers.set('Authorization', 'JWT ' + token)
 			auth.authenticated = true
 		}
 
@@ -30,6 +36,7 @@ let auth = {
 		} else {
 			// is this a callback?
 			auth.lock.on('authenticated', function(authResult) {
+				console.log('authd')
 				auth.lock.getProfile(authResult.idToken, function(error, profile) {
 					if (error) {
 						// Handle error
